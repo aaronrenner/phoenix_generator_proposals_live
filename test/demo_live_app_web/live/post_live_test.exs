@@ -33,7 +33,7 @@ defmodule DemoLiveAppWeb.PostLiveTest do
       {:ok, index_live, _html} = live(conn, Routes.post_index_path(conn, :index))
 
       assert index_live |> element("a", "New Post") |> render_click() =~
-        "New Post"
+               "New Post"
 
       assert_patch(index_live, Routes.post_index_path(conn, :new))
 
@@ -55,7 +55,7 @@ defmodule DemoLiveAppWeb.PostLiveTest do
       {:ok, index_live, _html} = live(conn, Routes.post_index_path(conn, :index))
 
       assert index_live |> element("#post-#{post.id} a", "Edit") |> render_click() =~
-        "Edit Post"
+               "Edit Post"
 
       assert_patch(index_live, Routes.post_index_path(conn, :edit, post))
 
@@ -95,7 +95,7 @@ defmodule DemoLiveAppWeb.PostLiveTest do
       {:ok, show_live, _html} = live(conn, Routes.post_show_path(conn, :show, post))
 
       assert show_live |> element("a", "Edit") |> render_click() =~
-        "Edit Post"
+               "Edit Post"
 
       assert_patch(show_live, Routes.post_show_path(conn, :edit, post))
 
