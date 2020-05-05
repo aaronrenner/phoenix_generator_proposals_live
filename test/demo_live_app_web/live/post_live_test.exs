@@ -2,11 +2,17 @@ defmodule DemoLiveAppWeb.PostLiveTest do
   use DemoLiveAppWeb.ConnCase
 
   import Phoenix.LiveViewTest
-
   import DemoLiveApp.BlogFixtures
 
+  alias DemoLiveApp.Blog
+
+  @create_attrs %{body: "some body", rating: 42, title: "some title"}
+  @update_attrs %{body: "some updated body", rating: 43, title: "some updated title"}
+  @invalid_attrs %{body: nil, rating: nil, title: nil}
+
   defp create_post(_) do
-    %{post: post_fixture()}
+    post = post_fixture()
+    %{post: post}
   end
 
   describe "Index" do
@@ -28,12 +34,12 @@ defmodule DemoLiveAppWeb.PostLiveTest do
       assert_patch(index_live, Routes.post_index_path(conn, :new))
 
       assert index_live
-             |> form("#post-form", post: invalid_post_attrs_fixture())
+             |> form("#post-form", post: @invalid_attrs)
              |> render_change() =~ "can&apos;t be blank"
 
       {:ok, _, html} =
         index_live
-        |> form("#post-form", post: post_attrs_fixture())
+        |> form("#post-form", post: @create_attrs)
         |> render_submit()
         |> follow_redirect(conn, Routes.post_index_path(conn, :index))
 
@@ -50,12 +56,12 @@ defmodule DemoLiveAppWeb.PostLiveTest do
       assert_patch(index_live, Routes.post_index_path(conn, :edit, post))
 
       assert index_live
-             |> form("#post-form", post: invalid_post_attrs_fixture())
+             |> form("#post-form", post: @invalid_attrs)
              |> render_change() =~ "can&apos;t be blank"
 
       {:ok, _, html} =
         index_live
-        |> form("#post-form", post: update_post_attrs_fixture())
+        |> form("#post-form", post: @update_attrs)
         |> render_submit()
         |> follow_redirect(conn, Routes.post_index_path(conn, :index))
 
@@ -90,12 +96,12 @@ defmodule DemoLiveAppWeb.PostLiveTest do
       assert_patch(show_live, Routes.post_show_path(conn, :edit, post))
 
       assert show_live
-             |> form("#post-form", post: invalid_post_attrs_fixture())
+             |> form("#post-form", post: @invalid_attrs)
              |> render_change() =~ "can&apos;t be blank"
 
       {:ok, _, html} =
         show_live
-        |> form("#post-form", post: update_post_attrs_fixture())
+        |> form("#post-form", post: @update_attrs)
         |> render_submit()
         |> follow_redirect(conn, Routes.post_show_path(conn, :show, post))
 
