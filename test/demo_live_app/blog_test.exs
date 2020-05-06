@@ -8,8 +8,6 @@ defmodule DemoLiveApp.BlogTest do
 
     import DemoLiveApp.BlogFixtures
 
-    @valid_attrs %{body: "some body", rating: 42, title: "some title"}
-    @update_attrs %{body: "some updated body", rating: 43, title: "some updated title"}
     @invalid_attrs %{body: nil, rating: nil, title: nil}
 
     test "list_posts/0 returns all posts" do
@@ -23,7 +21,10 @@ defmodule DemoLiveApp.BlogTest do
     end
 
     test "create_post/1 with valid data creates a post" do
-      assert {:ok, %Post{} = post} = Blog.create_post(@valid_attrs)
+      valid_attrs = %{body: "some body", rating: 42, title: "some title"}
+
+      assert {:ok, %Post{} = post} = Blog.create_post(valid_attrs)
+
       assert post.body == "some body"
       assert post.rating == 42
       assert post.title == "some title"
@@ -35,7 +36,10 @@ defmodule DemoLiveApp.BlogTest do
 
     test "update_post/2 with valid data updates the post" do
       post = post_fixture()
-      assert {:ok, %Post{} = post} = Blog.update_post(post, @update_attrs)
+      update_attrs = %{body: "some updated body", rating: 43, title: "some updated title"}
+
+      assert {:ok, %Post{} = post} = Blog.update_post(post, update_attrs)
+
       assert post.body == "some updated body"
       assert post.rating == 43
       assert post.title == "some updated title"
